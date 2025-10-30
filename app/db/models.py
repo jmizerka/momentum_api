@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import CheckConstraint, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
@@ -20,3 +22,12 @@ class Borrower(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     card_number: Mapped[str] = mapped_column(String(6), index=True, unique=True)
     __table_args__ = (CheckConstraint("card_number ~ '^[0-9]{6}$'", name="check_card_number_six_digits"),)
+
+
+class Loan(Base):
+    __tablename__ = "loans"
+    id: Mapped[str] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    book_id: Mapped[int] = mapped_column(Integer, ForeignKey("books.id"))
+    borrower_id: Mapped[int] = mapped_column(Integer, ForeignKey("borrowers.id"))
+    borrow_date: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=datetime.now)
+    return_date: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=True, default=None)
