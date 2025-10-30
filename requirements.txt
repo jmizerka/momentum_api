@@ -1,0 +1,5 @@
+asyncpg
+fastapi[standard]
+psycopg2-binary
+sqlalchemy
+
