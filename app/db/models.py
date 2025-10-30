@@ -12,3 +12,4 @@ class Book(Base):
     serial_num: Mapped[str] = mapped_column(String(6), unique=True, index=True)  # indexing for future filtering option
     title: Mapped[str] = mapped_column(String, nullable=False, index=True)
     author: Mapped[str] = mapped_column(String, nullable=False, index=True)
+    __table_args__ = (CheckConstraint("serial_num ~ '^[0-9]{6}$'", name="check_serial_num_six_digits"),)
