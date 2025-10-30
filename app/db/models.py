@@ -13,3 +13,10 @@ class Book(Base):
     title: Mapped[str] = mapped_column(String, nullable=False, index=True)
     author: Mapped[str] = mapped_column(String, nullable=False, index=True)
     __table_args__ = (CheckConstraint("serial_num ~ '^[0-9]{6}$'", name="check_serial_num_six_digits"),)
+
+
+class Borrower(Base):
+    __tablename__ = "borrowers"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    card_number: Mapped[str] = mapped_column(String(6), index=True, unique=True)
+    __table_args__ = (CheckConstraint("card_number ~ '^[0-9]{6}$'", name="check_card_number_six_digits"),)
